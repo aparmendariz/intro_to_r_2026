@@ -12,6 +12,14 @@ format:
     theme: cosmo
     code-copy: true
     df-print: kable
+  pdf:
+    toc: true
+    toc-depth: 3
+    geometry: margin=2cm
+    fontsize: 10pt
+    code-overflow: wrap
+    df-print: default
+    keep-tex: false
 execute:
   echo: true
   warning: false
@@ -21,6 +29,7 @@ execute:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+options(width = 95)
 library(dplyr)
 library(ggplot2)
 ```
