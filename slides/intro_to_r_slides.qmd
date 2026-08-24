@@ -3,8 +3,8 @@ title: |
   | \huge A Brief Introduction to
   | \huge Programming with R
 subtitle: "MEcon & MiQE/F Introductory Week"
-author: "Erik Senn & Jeremia Stalder"
-date: "September 5, 2025"
+author: "Ana Armendariz & Federica Mascolo"
+date: "September 4, 2026"
 format:
   beamer:
     theme: default
@@ -32,6 +32,7 @@ format:
         \definecolor{mDarkBlue}{HTML}{23373b}
         \definecolor{mLightBlue}{HTML}{0066CC}
         \definecolor{mAccent}{HTML}{EB811B}
+        \definecolor{hsgDarkGreen}{HTML}{006B54}
         \definecolor{mGray}{HTML}{4A4A4A}
         \definecolor{mLightGray}{HTML}{F5F5F5}
         \definecolor{mBackground}{HTML}{FAFAFA}
@@ -63,7 +64,7 @@ format:
         % Frame title with rule
         \setbeamertemplate{frametitle}{
           \vspace{0.4em}\insertframetitle\vspace{0em}
-          \textcolor{mAccent}{\rule{\textwidth}{2pt}}
+          \textcolor{hsgDarkGreen}{\rule{\textwidth}{2pt}}
         }
 
         % Section page
@@ -185,263 +186,123 @@ opts_chunk$set(
 
 # Part I: Background / Tools {.section}
 
-### Schedule
+### Roadmap
 
-\begin{columns}[T]
-\begin{column}{0.48\textwidth}
-\textbf{Morning Sessions}
-\vspace{0.5em}
+```{=tex}
+\begin{enumerate}
+\item \keyword{Part I: Background and tools}
 
-\textcolor{mLightBlue}{09:15 - 10:00} \\
-Introduction, Background, Tools, First steps with R
-\vspace{0.5em}
+\vspace{0.4em}
 
-\textcolor{mLightBlue}{10:00 - 10:15} \\
-Break, Support with Installations
-\vspace{0.5em}
+\item \keyword{Part II: First steps and basic concepts}
 
-\textcolor{mLightBlue}{10:15 - 11:00} \\
-Exercises, Basic Concepts
-\vspace{0.5em}
+\vspace{0.4em}
 
-\textcolor{mLightBlue}{11:00 - 11:15} \\
-Break, Q\&A
-\vspace{0.5em}
+\item \keyword{Part III: Working with data}
 
-\textcolor{mLightBlue}{11:15 - 11:45} \\
-Exercises, Basic Concepts
-\vspace{0.5em}
+\vspace{0.4em}
 
-\end{column}
-
-\begin{column}{0.48\textwidth}
-\textbf{Afternoon Sessions}
-\vspace{0.5em}
-
-\textcolor{mLightBlue}{11:45 - 13:15} \\
-Lunch (individually)
-\vspace{0.5em}
-
-\textcolor{mLightBlue}{13:15 - 14:00} \\
-Working with Data
-\vspace{0.5em}
-
-\textcolor{mLightBlue}{14:00 - 14:15} \\
-Break, Q\&A
-\vspace{0.5em}
-
-\textcolor{mLightBlue}{14:15 - 15:15} \\
-Exercises
-\end{column}
-\end{columns}
-
+\item \keyword{Final remarks and next steps}
+\end{enumerate}
+```
 ### Welcome
 
+```{=tex}
 \begin{enumerate}
 \large
-\item \keyword{Fire up} your notebooks!
-
-\vspace{0.3em}
 
 \item \keyword{Download} (or clone) the course materials
   \begin{itemize}
-  \item \href{https://github.com/ErikSenn/intro_to_r_2025/}{\textcolor{mLightBlue}{GitHub Repository}}
-  \item Course slides available online
+  \item \href{https://github.com/aparmendariz/intro_to_r_2026}{\textcolor{mLightBlue}{GitHub Repository}}
+  \item Slides, data, exercises and installation instructions are all available online
   \end{itemize}
   \item   \keyword{Download and install} \highlight{R and R-studio} if you have not done so yet ( \url{https://cran.r-project.org/}, \url{https://posit.co/download/rstudio-desktop/})  
 \end{enumerate}
-
+```
 ## Why learn to program (now)?
 
 ### Background: technological change
 
-:::::: {.columns}
+::: columns
 ::: {.column width="60%"}
+```{=tex}
 \vspace{1em}
 \begin{itemize}
-\item Computers have become \keyword{omnipresent}
-
-\vspace{0.3em}
-
 \item Data is one of the world's most \accenttext{valuable resources}
 
 \vspace{0.3em}
 
 \item \highlight{AI and machine learning} are reshaping every business and industry
 \end{itemize}
+```
 :::
 
 ::: {.column width="40%"}
-
 :::
-::::::
+:::
 
 ### Perspective: data science and economics
 
-\begin{overprint}
-  \only<1>{\includegraphics[width=.9\textwidth]{img/Slide7.jpg}}
-  \only<2>{\includegraphics[width=.9\textwidth]{img/Slide6.jpg}}
-  \only<3>{\includegraphics[width=.9\textwidth]{img/Slide5.jpg}}
-  \only<4>{\includegraphics[width=.9\textwidth]{img/Slide4.jpg}}
-  \only<5>{\includegraphics[width=.9\textwidth]{img/Slide3.jpg}}
-  \only<6>{\includegraphics[width=.9\textwidth]{img/Slide2.jpg}}
-  \only<7>{\includegraphics[width=.9\textwidth]{img/Slide1.jpg}}
-\end{overprint}
-
+```{=tex}
+\includegraphics[width=.9\textwidth]{img/Slide1.jpg}
+```
 ### Programming in the age of AI-assistance
 
-AI assistants are powerful for many coding tasks, but might do 'stupid' hard to spot mistakes.
+AI assistants are powerful for many coding tasks, but they can make subtle mistakes that are difficult to spot.
 
-- \keyword{Understand code}: AI-usage requires coding skills to evaluate suggestions (bugs, efficiency, security)
-- \accenttext{Problem solving}: Structuring the analysis and adapting solutions are harder to automate.
-- Blindly prompting AI for simple tasks hinders learning. 
+-   **Understand code**: Using AI effectively requires enough coding knowledge to evaluate its suggestions.
+-   **Problem solving**: Structuring an analysis and adapting solutions to a specific task are difficult to automate.
+-   **More effective prompting**: Understanding the problem helps you write precise prompts and assess the answers you receive.
+-   Blindly prompting AI for simple tasks hinders learning.
 
-**Recommendation:** use \highlight{AI as a teacher} for programming
+**Recommendation:** use **AI as a teacher** for programming
 
 ## Why R?
 
 ### A data language
 
-:::::: {.columns}
+::: columns
 ::: {.column width="50%"}
 \vspace{1em}
-- Widely used in \keyword{data science} jobs
+
+-   Widely used in \keyword{data science} jobs
 
 \vspace{0.5em}
 
-- Particularly adapted to program with \accenttext{data}
+-   Less common than Python in industry, but a strong starting point: \textbf{programming fundamentals and data skills transfer across languages}
 
 \vspace{0.5em}
 
-- Originally designed for \highlight{statistical analysis}
+-   Particularly adapted to program with \accenttext{data}
 
 \vspace{0.5em}
 
-- Competing with Python as the \important{top data science language}
+-   Originally designed for \highlight{statistical analysis}
+
+\vspace{0.5em}
+
+-   Wide and open online community: good sources to train LLM
 :::
 
 ::: {.column width="50%"}
-\includegraphics[width=.5\textwidth]{img/R_logo.png}
-\vspace{1em}
-\includegraphics[width=.5\textwidth]{img/Python_logo.png}
+\includegraphics[width=.5\textwidth]{img/R_logo.png} \vspace{1em} \includegraphics[width=.5\textwidth]{img/Python_logo.png}
 :::
-::::::
-
-### A high-level language
-
-:::::: {.incremental}
-- \keyword{Relatively easy} to learn
-
-\vspace{0.3em}
-
-- Extensive \accenttext{free resources}:
-  - \href{https://www.datacamp.com/courses/free-introduction-to-r}{\textcolor{mLightBlue}{DataCamp: Introduction to R}}
-  - \href{https://www.rstudio.com/resources/cheatsheets/}{\textcolor{mLightBlue}{RStudio Cheatsheets}}
-  - \href{https://stackoverflow.com/}{\textcolor{mLightBlue}{Stack Overflow}}
-::::::
-
-
-## Tools for this workshop 
-
-### R
-
-\keyword{R} is the \accenttext{programming language.}
-
-You can download R from: [https://cran.r-project.org/](https://cran.r-project.org/)
-
-### Rstudio desktop
-
-\keyword{RStudio} is the most popular \accenttext{integrated development environment (IDE).} for R, giving a useful visual interface for key programming tasks.
-
-You can download RStudio Desktop from: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
-
-### Rstudio cloud
-
-\keyword{RStudio Cloud} lets you use RStudio \highlight{without a local installation}
-
-You can use RStudio (Posit) Cloud by registering here: [https://posit.cloud/](https://posit.cloud/)
-
-
-## An R-Studio Interface Tour
-
-### RStudio overview
-
-- \highlight{Console}: run R commands directly, quick testing  
-- \highlight{Environment / Files}: see variables, data, manage plots & files  
-- \highlight{Help / Viewer}: access documentation, view HTML output/plots
-
-
-### RStudio interface
-
-![](img/RstudioGUI.png){width=90%}
-
-### Scripts in RStudio
-
-- Write and save code in `.R` files  
-- Run selected lines (`Ctrl+Enter`)  
-- Keep work reproducible  
-
-![](img/RScriptWin.png){width=70%}
+:::
 
 
 ### Working directories & R projects
 
-- **Working directory** = folder where R looks for files, e.g. data to load.
-- Use `getwd()` and `setwd()`
-- Better: **R Projects**  
-  - Define self-contained working environments  
-  - Save code, data, outputs together  
-  - Makes collaboration & reproducibility easier  
-
-### Other tools in R-studio
-
-\begin{itemize}
-  \item Help window for documentation
-  \item Visual interfaces for file navigation, packages, exporting plots, loading data, ...
-  \item Debugging, profiling, git for version control, AI integration (Copilot)
-\end{itemize}
+-   **Working directory** = folder where R looks for files, e.g. data to load.
+-   Use `getwd()` and `setwd()`
+-   Better: **R Projects**
+    -   Define self-contained working environments\
+    -   Save code, data, outputs together\
+    -   Makes collaboration & reproducibility easier
 
 
-## Exercises
+```{=tex}
 
-### Exercise a: setting up a working environment
-
-\begin{enumerate}
-\tightlist
-\item Open \keyword{RStudio} and navigate to your desired working folder
-
-\vspace{0.3em}
-
-\item Create a new folder called \accenttext{r\_course}
-
-\vspace{0.3em}
-
-\item Set it as your \keyword{working directory}
-
-\vspace{0.3em}
-
-\item Create subfolders: \highlight{data} and \highlight{code}
-
-\vspace{0.3em}
-
-\item[(*)] Create a new \important{R Project} in the \texttt{r\_course} folder
-
-\vspace{0.3em}
-
-\item[(*)] Choose your favorite R-studio \important{appearance}: `Tools > Global Options > Appearance`  
-\end{enumerate}
-
-### Exercise b: r scripts
-
-1. In the R console, type:
-
-```{r, eval=FALSE}
-print("Hello world")
 ```
-
-2. Create a new \keyword{R script}: `File > New File > R Script` (or `Ctrl+Shift+N`)
-
-3. Type the same code in the script and \accenttext{run it} using `Ctrl+Enter` or `Ctrl+As+Enter`
 
 \normalsize
 
@@ -487,33 +348,18 @@ class(a)  # Display the class
 str(a)    # Display the structure
 ```
 
-### Math operators
-
-\keyword{Basic operators:}
-
-- $+$ : `+`
-- $-$ : `-`  
-- $\times$ : `*`
-- $\div$ : `/`
-
-\accenttext{More operators:}
-
-- $a^n$ : `a^n`
-- $\sqrt{a}$ : `sqrt(a)`
-- $\ln a$ : `log(a)`
-- $e^n$ : `exp(n)`
 
 ## Basic Programming Concepts
 
 ### Loops
 
-- \keyword{Repeatedly execute} a sequence of commands
+-   \keyword{Repeatedly execute} a sequence of commands
 
 \vspace{0.3em}
 
-- For a \accenttext{known} or \accenttext{unknown} number of iterations
-  - \highlight{for-loop}: number of iterations typically known
-  - \highlight{while-loop}: iterate until a condition is met
+-   For a \accenttext{known} or \accenttext{unknown} number of iterations
+    -   \highlight{for-loop}: number of iterations typically known
+    -   \highlight{while-loop}: iterate until a condition is met
 
 ### For-loops in r
 
@@ -569,8 +415,8 @@ while (total <= 10) {
 }
 total
 ```
-\normalsize
 
+\normalsize
 
 ### Booleans and logical statements
 
@@ -602,15 +448,15 @@ if (condition) {
 
 ### R functions
 
-- Functions take \keyword{parameter values} as input, process these values, and \accenttext{return} results
+-   Functions take \keyword{parameter values} as input, process these values, and \accenttext{return} results
 
 \vspace{0.01em}
 
-- Many functions are \highlight{provided with R}
+-   Many functions are \highlight{provided with R}
 
 \vspace{0.01em}
 
-- Additional functions via \important{packages}
+-   Additional functions via \important{packages}
 
 ```{r}
 numbers <- c(13, 25, 39, 881)
@@ -632,9 +478,11 @@ my_mean <- function(x) {
 my_mean(numbers)  # call the function with the input argument 
 mean(numbers)  # Compare with built-in
 ```
+
 ### Loading functions from packages
 
 <!-- - Install packages once using `install.packages("<package_name>")` -->
+
 <!-- - Load packages in each session using `library(<package_name>)`.  -->
 
 ```{r}
@@ -689,20 +537,6 @@ my_list[["letters"]]
 my_list[[1]][1:3]
 ```
 
-### Matrices
-
-```{r}
-# Create a matrix
-my_matrix <- matrix(integer_vector, nrow = 4)
-my_matrix
-```
-
-### Matrices: extracting rows/columns
-
-```{r}
-my_matrix[2,]      # Second row
-my_matrix[, 1:2]   # First two columns
-```
 
 ### Data frames: creation
 
@@ -722,66 +556,6 @@ my_df
 my_df$Age         # Access column
 my_df[2, ]        # Second row
 ```
-
-## Exercises
-
-### Exercise a: write a sum function
-
-Write a function that takes a \keyword{numeric vector} as input and returns the \accenttext{sum} of the vector's elements.
-
-```{r, eval=FALSE}
-my_sum <- function(x) {
-    # Your code here
-}
-```
-
-Test by comparing with built-in `sum()` function.
-
-### Exercise b: robustness and warnings
-
-Test your `my_sum()` function with:
-
-```{r, eval=FALSE}
-numbers2 <- c("1", "2", "3")
-```
-
-Add \keyword{error checking} to make the function robust.
-
-### Exercise c: standard deviation function
-
-Implement a function to compute the \accenttext{standard deviation}:
-
-$$\text{SD} = \sqrt{\frac{1}{N-1}\sum_{i=1}^N (x_i - \bar{x})^2}$$
-
-### Exercise d: standard error function
-
-Building on Exercise C, implement:
-
-$$\text{SE}_{\bar{x}} = \frac{\text{SD}}{\sqrt{N}}$$
-
-### Exercise e: t-test
-
-Implement a \keyword{one-sample t-test} function:
-
-$$t = \frac{\bar{x} - \mu_0}{\text{SE}_{\bar{x}}}$$
-
-### Exercise f: fibonacci sequence
-
-Generate the first 30 \accenttext{Fibonacci numbers} where:
-
-- $F_0 = 0$, $F_1 = 1$
-- $F_n = F_{n-1} + F_{n-2}$ for $n > 1$
-
-### Exercise g: multiples of 3 and 5 (*)
-
-Write a function that computes the sum of all \keyword{multiples of 3 or 5} up to a number $N$.
-
-\accenttext{Hint:} Multiples of both 3 and 5 should only be added once!
-
-### Exercise h: prime numbers (*)
-
-Write a function that computes the sum of all \highlight{prime numbers} up to a number $N$.
-
 
 
 # Part III: Working with Data {.section}
@@ -820,16 +594,19 @@ head(swiss, 4)
 Example of \keyword{CSV format}:
 
 \footnotesize
-```
+
+```         
 "","Fertility","Agriculture","Examination",...
 "Courtelary",80.2,17,15,...
 "Delemont",83.1,45.1,6,...
 ```
+
 \normalsize
 
 ### Importing data from different sources
 
 \footnotesize
+
 ```{r, eval=FALSE}
 # Csv files
 swiss_csv <- read.csv("./data/swiss.csv")
@@ -842,6 +619,7 @@ swiss_excel <- read_excel("./data/swiss.xlsx")
 library(haven)
 swiss_spss <- read_spss("./data/swiss.sav")
 ```
+
 \normalsize
 
 ## Introduction to the Tidyverse
@@ -875,6 +653,7 @@ swiss |>
 ```
 
 \vspace{1.5em}
+
 Note: `|>` is built into R (since version 4.1.0). `%>%` is from the `magrittr` package, which has additional features.
 
 ### Select columns with `select()`
@@ -942,6 +721,7 @@ swiss |>
 ### Group operations with `group_by()`
 
 \footnotesize
+
 ```{r}
 # Group and summarize
 swiss |> 
@@ -952,11 +732,13 @@ swiss |>
     count = n()
   )
 ```
+
 \normalsize
 
 ### Combining multiple operations
 
 \footnotesize
+
 ```{r}
 swiss |> 
   filter(Agriculture < 50) |>
@@ -968,34 +750,9 @@ swiss |>
   ) |>
   arrange(desc(avg_exam))
 ```
+
 \normalsize
 
-### Reshape data: wide to long
-
-\footnotesize
-```{r}
-# Original wide format
-swiss_subset <- swiss |> 
-  slice(1:2) |>
-  select(Fertility, Agriculture)
-
-swiss_subset
-```
-\normalsize
-
-### Reshape data: `pivot_longer()`
-
-\footnotesize
-```{r}
-# Convert to long format
-swiss_subset |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Metric",
-    values_to = "Value"
-  )
-```
-\normalsize
 
 ### Join data frames (preparation)
 
@@ -1020,25 +777,6 @@ df2 <- data.frame(
 left_join(df1, df2, by = "Student_ID")
 ```
 
-### Working with dates using lubridate (preparation)
-
-```{r}
-# Create and parse dates
-dates <- c("2025-09-05", "2025-09-06")
-parsed_dates <- ymd(dates)
-```
-
-### Working with dates using lubridate
-
-```{r}
-# Extract components
-data.frame(
-  date = parsed_dates,
-  year = year(parsed_dates),
-  month = month(parsed_dates),
-  weekday = wday(parsed_dates, label = TRUE)
-)
-```
 
 ### Purrr: map functions
 
@@ -1050,27 +788,7 @@ swiss |>
   round(2)
 ```
 
-### String manipulation with stringr
-
-```{r}
-masters <- c("Mecon", "MiQE/F", "MACFin")
-
-# String operations
-tibble(
-  original = masters,
-  lower = str_to_lower(masters),
-  length = str_length(masters),
-  contains_e = str_detect(masters, "e")
-)
-```
-
-
 ## Visualization with R (ggplot2)
-
-### Grammar of graphics - layers
-
-\center
-\includegraphics[width=.7\textwidth]{img/grammar_of_graphics.png}
 
 ### Ggplot2 basics
 
@@ -1113,6 +831,7 @@ ggplot(data = swiss,
 ### Using facets
 
 \SetCodeSize{\footnotesize}
+
 ```{r facet, fig.height=2}
 ggplot(data = swiss, 
        aes(x = Education, y = Examination)) + 
@@ -1123,6 +842,7 @@ ggplot(data = swiss,
 ### Adding statistics with loess
 
 \SetCodeSize{\footnotesize}
+
 ```{r stat-loess, fig.height=2}
 ggplot(data = swiss, 
        aes(x = Education, y = Examination)) + 
@@ -1134,6 +854,7 @@ ggplot(data = swiss,
 ### Adding statistics with lm
 
 \SetCodeSize{\footnotesize}
+
 ```{r stat-lm, fig.height=2}
 ggplot(data = swiss, 
        aes(x = Education, y = Examination)) + 
@@ -1145,6 +866,7 @@ ggplot(data = swiss,
 ### Multiple aesthetics
 
 \SetCodeSize{\footnotesize}
+
 ```{r multi-aes, fig.height=1.75}
 ggplot(data = swiss, 
        aes(x = Education, y = Examination)) + 
@@ -1152,42 +874,6 @@ ggplot(data = swiss,
   geom_smooth(method = 'lm', se = FALSE) +
   facet_wrap(~Religion) +
   theme(legend.position = "right")
-```
-
-### Change coordinates
-
-\SetCodeSize{\footnotesize}
-```{r coord-flip, fig.height=1.75}
-ggplot(data = swiss, 
-       aes(x = Education, y = Examination)) + 
-  geom_point() +
-  geom_smooth(method = 'lm', se = FALSE) +
-  facet_wrap(~Religion) + 
-  coord_flip()
-```
-
-### Customizing themes
-
-\SetCodeSize{\footnotesize}
-```{r theme-custom, fig.height=1.75}
-ggplot(data = swiss, 
-       aes(x = Education, y = Examination)) + 
-  geom_point() +
-  geom_smooth(method = 'lm', se = FALSE) +
-  facet_wrap(~Religion) + 
-  theme_minimal()
-```
-
-### Pre-built themes
-
-\SetCodeSize{\footnotesize}
-```{r theme-dark, fig.height=1.75}
-ggplot(data = swiss, 
-       aes(x = Education, y = Examination)) + 
-  geom_point() +
-  geom_smooth(method = 'lm', se = FALSE) +
-  facet_wrap(~Religion) + 
-  theme_dark()
 ```
 
 ### Save plots
@@ -1206,13 +892,12 @@ ggsave("scatter.pdf", plot = p,
        width = 6, height = 4)
 ```
 
-
-
 ## Basic Statistics with R
 
 ### Descriptive statistics
 
 \SetCodeSize{\footnotesize}
+
 ```{r}
 # Create sample data
 x <- c(10, 22, 33, 22, 40)
@@ -1230,6 +915,7 @@ tibble(
 ### T-test example
 
 \SetCodeSize{\footnotesize}
+
 ```{r}
 # Generate sample data
 set.seed(123)
@@ -1257,6 +943,7 @@ coef(fit1) # Use 'summary(fit1)' for more details
 ### Multiple linear regression
 
 \footnotesize
+
 ```{r}
 # Fit model with multiple predictors
 fit2 <- lm(Examination ~ Education + Catholic + Agriculture, 
@@ -1268,21 +955,25 @@ tibble(
   Adj_R2 = summary(fit2)$adj.r.squared,
   RMSE = sigma(fit2))
 ```
+
 \normalsize
 
 ### Regression coefficients table
 
 \footnotesize
+
 ```{r}
 # Extract coefficient information
 coef_summary <- summary(fit2)$coefficients
 round(coef_summary, 3)
 ```
+
 \normalsize
 
 ### Other econometric models
 
 \SetCodeSize{\footnotesize}
+
 ```{r, eval=FALSE}
 # Binary outcomes - logit
 glm(y ~ x1 + x2, 
@@ -1305,6 +996,7 @@ feols(y ~ x1 + x2 | x3,
 ### Print regression results - console
 
 \tiny
+
 ```{r, eval=FALSE}
 # Basic regression table
 library(modelsummary)
@@ -1320,11 +1012,13 @@ modelsummary(models,
              stars = TRUE,
              gof_omit = "AIC|BIC|Log.Lik.")
 ```
+
 \normalsize
 
 ### Save regression output
 
 \footnotesize
+
 ```{r, eval=FALSE}
 # Save table directly to file
 modelsummary(models, output = "table.docx")
@@ -1339,90 +1033,6 @@ modelsummary(models, output = "html")
 modelsummary(models, output = "latex")
 modelsummary(models, output = "markdown")
 ```
-\normalsize
-
-## Exercise i: Working with Data using dplyr
-
-
-### Exercise i.1
-- Load the dataset with `data(swiss)`  
-- Use `mutate()` to create two new variables:  
-  - `UrbanizationRate`: the inverse of Agriculture (100 – Agriculture)  
-  - `FertilityCategory`: a factor variable with levels:  
-    - 0–60: "Low"  
-    - 60–80: "Medium"  
-    - 80–100: "High"  
-- Hint: use `case_when()` for categorization  
-
-
-### Exercise i.2
-- Filter observations where Fertility > 70  
-- Arrange results by `Education` in descending order  
-
----
-
-### Exercise i.3
-- Group data by `FertilityCategory`  
-- Calculate average `Education` for each category using `group_by()` and `summarize()`  
-
-
-### Exercise i.4
-- Find the top 3 observations with highest Fertility values  
-- Display only `Fertility` and `Education` columns  
-
-
-### Exercise i.5
-- Create `EducationToFertilityRatio = Education / Fertility`  
-- Show all observations where the ratio is between 0.1 and 0.2  
-
-### Exercise i.6
-- Group by `FertilityCategory`  
-- Calculate:  
-  - Median Fertility  
-  - Standard deviation of Education  
-- Store the results in a new data frame  
-
-
-### Exercise i.7
-- Use `n_distinct()` to determine the number of distinct values in:  
-  - `Education`  
-  - `FertilityCategory`  
-
-## Exercise j: Visualizing Data
-
-### Exercise j.1
-- Load the dataset `swiss.csv` or call `data(swiss)`
-
-### Exercise j.2
-- Print the last 3 observations of the dataset  
-- Create summary statistics for all variables  
-
-### Exercise j.3
-- Create new variables:  
-  - `UrbanizationRate` = 100 – Agriculture  
-  - `FertilityCategory`:  
-    - 0–60: "Low"  
-    - 60–80: "Medium"  
-    - 80–100: "High"  
-- Hint: use `cut()`  
-
-### Exercise j.4
-- Create a histogram of `Fertility`  
-  - Fill bars in dark blue  
-  - Add a minimal theme  
-
-### Exercise j.5
-- Create a boxplot of the variable `Education`  
-
-### Exercise j.6
-- Create a scatter plot of `Education` vs. `Fertility`  
-- Add a regression line (linear model)  
-
-### Exercise j.7
-- Create scatter plots of `Agriculture` vs. `Examination`  
-- Show them separately for each `FertilityCategory` using `facet_wrap()`  
-
-
 
 
 # Final Remarks {.section}
@@ -1430,31 +1040,51 @@ modelsummary(models, output = "markdown")
 ### Some best practices for R programming
 
 \small
-1. \keyword{Organization}
-   - Start scripts with `library()` calls
-   - Use meaningful variable names
-   - Comment your code with `#`
 
-\vspace{0.3em}
+::: columns
+::: {.column width="50%"}
+1.  \keyword{Organization}
 
-2. \accenttext{Efficiency}
-   - Use functions to avoid repetition
-   - Vectorize operations when possible
-   - Use the tidyverse for data manipulation
+    -   Start scripts with `library()` calls
+    -   Use meaningful variable names
+    -   Comment your code with `#`
 
-\vspace{0.3em}
+\vspace{0.4em}
 
-3. \highlight{Reproducibility}
-   - Set seeds for random operations
-   - Use relative paths (`./data/`)
-   - Document package versions (or with with projects / environments)
+2.  \accenttext{Efficiency}
+
+    -   Use functions to avoid repetition
+    -   Vectorize operations when possible
+    -   Use the tidyverse for data manipulation
+:::
+
+::: {.column width="50%"}
+3.  \highlight{Reproducibility}
+
+    -   Set seeds for random operations
+    -   Use relative paths (`./data/`)
+    -   Work inside an R Project; document package versions
+
+\vspace{0.4em}
+
+4.  \important{Working with AI}
+
+    -   Ask for an \textbf{explanation}, not only for code
+    -   Give context: data, error message, what you already tried
+    -   \textbf{Run and read} every suggestion before you keep it
+    -   Never paste confidential data
+:::
+:::
+
 \normalsize
 
 ### Resources for learning R
 
-:::::: {.columns}
+::: columns
 ::: {.column width="50%"}
 \textcolor{mLightBlue}{\textbf{Online Resources:}}
+
+```{=tex}
 \begin{itemize}
 \item \href{https://stackoverflow.com/collectives/r-language}{Stack Overflow}
 
@@ -1470,10 +1100,13 @@ modelsummary(models, output = "markdown")
 
 \item \href{https://cran.r-project.org/manuals.html}{CRAN documentation}
 \end{itemize}
+```
 :::
 
 ::: {.column width="50%"}
 \textcolor{mAccent}{\textbf{AI Assistance:}}
+
+```{=tex}
 \begin{itemize}
 \item ChatGPT
 
@@ -1490,8 +1123,9 @@ modelsummary(models, output = "markdown")
 \item Claude
 
 \end{itemize}
+```
 :::
-::::::
+:::
 
 <!-- ### An example on ai assistance for learning coding -->
 
@@ -1499,43 +1133,47 @@ modelsummary(models, output = "markdown")
 
 **Bad prompt**
 
-- *“Please solve this coding assignment.”*  
-- *“Here’s my code, please fix it.”*
+-   *“Please solve this coding assignment.”*\
+-   *“Here’s my code, please fix it.”*
 
----
+------------------------------------------------------------------------
 
 **Better prompt**
 
-*“The code below yields a variable type error. Please correct it and explain my mistake.”*  
+*“The code below yields a variable type error. Please correct it and explain my mistake.”*
 
----
+------------------------------------------------------------------------
 
 **Good prompt:**
 
-- **System prompt**  
-*“I am learning to code in R and want to use you as a teacher.  
-Please guide me to find the solution myself, not just give the answer.”*  
+-   **System prompt**\
+    *“I am learning to code in R and want to use you as a teacher.\
+    Please guide me to find the solution myself, not just give the answer.”*
 
-- **Question prompt**  
-*“This code should do [A], but instead does [B].  
-I think the issue is in line [X–Y], where I meant to do [C].  
-Can you give me a hint?”*
-
-
+-   **Question prompt**\
+    *“This code should do \[A\], but instead does \[B\].\
+    I think the issue is in line \[X–Y\], where I meant to do \[C\].\
+    Can you give me a hint?”*
 
 ### Upcoming courses
 
 \keyword{Next Week}
 
-\accenttext{R Programming Course}  
-Instructor: Erik Senn  
-Dates: September 8-11, 2025  
-Time: 9:00-12:00 and 13:00-17:00  
-Location: Rosenbergstrasse 30, Room 61-152
-Contents: Similar contents as today in slower pace. Automated reports using R-markdown on last day.
+\accenttext{R Programming Course}
+
+Instructor: Jana Mareckova\
+Dates: September 7-10, 2026\
+Time: 9:00-12:00 and 13:00-17:00\
+Location: Rosenbergstrasse 30, Room 61-152\
+\highlight{Limited spots!}
+
+**Contents:**\
+Similar material to today's workshop, taught at a slower pace, plus automated reporting with R Markdown on the final day.
+
 
 ### Thank you!
 
+```{=tex}
 \begin{center}
 \Large
 \textcolor{mLightBlue}{Thanks for joining our R workshop!}
@@ -1547,16 +1185,4 @@ Contents: Similar contents as today in slower pace. Automated reports using R-ma
 \vspace{1em}
 \textcolor{mAccent}{\Large Happy Coding!}
 \end{center}
-
-### Survey - evaluation for introduction week
-
-
-  ![](img/survey_qr.png){height=175 fig-align='center'}
-
-\begin{center}
-
-\large
-\url{https://forms.office.com/e/Ki59zF84dY}\\
-\textcolor{mLightBlue}{Please take a moment to provide feedback on the introduction week. Your input helps us improve future courses!}\\
-\end{center}
-
+```
