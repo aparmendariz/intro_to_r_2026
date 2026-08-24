@@ -7,7 +7,7 @@ This course introduces students to the fundamental practices of programming with
 [Download ZIP file with the necessary course data and files.](https://github.com/ErikSenn/intro_to_r_2025/archive/refs/heads/main.zip)
 
 ## Course Slides
-- [Slides](https://github.com/ErikSenn/intro_to_r_2025/raw/main/slides/intro_to_r_slides.pdf)
+- [Slides](https://github.com/aparmendariz/intro_to_r_2026/blob/main/slides/intro_to_r_slides.pdf))
 
 ## Course Structure
 
