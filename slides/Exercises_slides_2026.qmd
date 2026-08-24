@@ -1,0 +1,383 @@
+---
+title: |
+  | \huge A Brief Introduction to
+  | \huge Programming with R - Exercises
+subtitle: "MEcon & MiQE/F Introductory Week"
+author: "Ana Armendariz & Federica Mascolo"
+date: "September 4, 2026"
+format:
+  beamer:
+    theme: default
+    colortheme: default
+    fonttheme: default
+    navigation: horizontal
+    section-titles: true
+    toc: false
+    slide-level: 3
+    fig-width: 5
+    fig-height: 3
+    fig-align: center
+    df-print: kable
+    fontsize: 12pt
+    aspectratio: 169
+    keep-tex: false
+    latex-engine: xelatex
+    include-in-header:
+      text: |
+        \usepackage{fontspec}K
+        \usepackage{tikz}
+        \usetikzlibrary{shapes,arrows,positioning}
+
+        % Colors
+        \definecolor{mDarkBlue}{HTML}{23373b}
+        \definecolor{mLightBlue}{HTML}{0066CC}
+        \definecolor{mAccent}{HTML}{EB811B}
+        \definecolor{hsgDarkGreen}{HTML}{006B54}
+        \definecolor{mGray}{HTML}{4A4A4A}
+        \definecolor{mLightGray}{HTML}{F5F5F5}
+        \definecolor{mBackground}{HTML}{FAFAFA}
+        \definecolor{mGreen}{HTML}{14B03D}
+        \definecolor{mPurple}{HTML}{6B3AA0}
+
+        % Fonts (fallbacks)
+        \IfFontExistsTF{Fira Sans}{\setsansfont{Fira Sans}}{%
+          \IfFontExistsTF{Helvetica Neue}{\setsansfont{Helvetica Neue}}{\setsansfont{Arial}}}
+
+        % Body text size
+        \setbeamerfont{normal text}{size=\normalsize}
+        % All slide titles (##) as \large
+        \setbeamerfont{frametitle}{size=\large,series=\bfseries}
+        \setbeamerfont{section title}{size=\huge,series=\bfseries}
+        \setbeamerfont{subsection title}{size=\large,series=\bfseries}
+
+        % Beamer colors
+        \setbeamercolor{normal text}{fg=mDarkBlue}
+        \setbeamercolor{alerted text}{fg=mAccent}
+        \setbeamercolor{example text}{fg=mLightBlue}
+        \setbeamercolor{structure}{fg=mDarkBlue}
+        \setbeamercolor{title}{fg=white,bg=mDarkBlue}
+        \setbeamercolor{frametitle}{fg=mDarkBlue,bg=mBackground}
+        \setbeamercolor{section in toc}{fg=mDarkBlue}
+        \setbeamercolor{subsection in toc}{fg=mGray}
+        \setbeamertemplate{navigation symbols}{}
+
+        % Frame title with rule
+        \setbeamertemplate{frametitle}{
+          \vspace{0.4em}\insertframetitle\vspace{0em}
+          \textcolor{mAccent}{\rule{\textwidth}{2pt}}
+        }
+
+        % Section page
+        \AtBeginSection[]{
+          \begin{frame}[plain]
+            \vfill\centering
+            \begin{beamercolorbox}[sep=12pt,center,shadow=false,rounded=true]{title}
+              {\Huge\bfseries\insertsectionhead\par}
+            \end{beamercolorbox}
+            \vfill
+          \end{frame}
+        }
+
+        % Footline
+        \setbeamertemplate{footline}{
+          \hbox{%
+          \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
+            \hspace{2ex}\usebeamerfont{author in head/foot}\insertshortauthor
+          \end{beamercolorbox}%
+          \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\insertframenumber{} / \inserttotalframenumber\hspace{2ex}
+          \end{beamercolorbox}}%
+        }
+
+        % Lists
+        \setbeamertemplate{itemize item}{\textcolor{mLightBlue}{$\bullet$}}
+        \setbeamertemplate{itemize subitem}{\textcolor{mGray}{$\circ$}}
+        \setbeamertemplate{itemize subsubitem}{\textcolor{mGray}{$-$}}
+        \setbeamertemplate{enumerate item}{\textcolor{mLightBlue}{\arabic{enumi}.}}
+        \setbeamertemplate{enumerate subitem}{\textcolor{mGray}{\alph{enumii}.}}
+        \setlength{\itemsep}{0.5em}
+        \setlength{\parskip}{0.3em}
+
+        % Blocks
+        \setbeamercolor{block title}{fg=white,bg=mLightBlue}
+        \setbeamercolor{block body}{fg=mDarkBlue,bg=mLightGray}
+        \setbeamercolor{block title alerted}{fg=white,bg=mAccent}
+        \setbeamercolor{block body alerted}{fg=mDarkBlue,bg=mAccent!10}
+
+        % Custom text macros (used in slides)
+        \newcommand{\keyword}[1]{\textcolor{mLightBlue}{\textbf{#1}}}
+        \newcommand{\accenttext}[1]{\textcolor{mAccent}{\textbf{#1}}}
+        \newcommand{\highlight}[1]{\textcolor{mGreen}{\textbf{#1}}}
+        \newcommand{\important}[1]{\textcolor{mPurple}{\textbf{#1}}}
+
+        % ---- Code blocks: normalsize + extra vertical space via hooks ----
+        \usepackage{etoolbox}
+
+        % Default size
+        \newcommand{\CodeSize}{\normalsize}
+        \newcommand{\SetCodeSize}[1]{\gdef\CodeSize{#1}}
+        
+        % Hooks for Pandoc's Highlighting environment
+        \AtBeginEnvironment{Highlighting}{\vspace{2pt}\CodeSize}
+        \AfterEndEnvironment{Highlighting}{\vspace{2pt}\SetCodeSize{\normalsize}}
+        
+        % Also adjust font used inside
+        \makeatletter
+        \def\verbatim@font{\CodeSize\ttfamily}
+        \makeatother
+
+classoption:
+  - compress
+  - fragile
+execute:
+  echo: true
+  warning: false
+  message: false
+  comment: ""
+  R.options:
+    width: 50
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(readxl)
+library(haven)
+library(stargazer)
+library(knitr)
+library(tidyverse)
+
+# Create a modern theme for plots
+theme_modern <- function() {
+  theme_minimal(base_size = 10) +
+    theme(
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.grid.major = element_line(color = "#E0E0E0", size = 0.3),
+      panel.grid.minor = element_blank(),
+      text = element_text(family = "sans", color = "#23373b"),
+      axis.text = element_text(color = "#4A4A4A"),
+      axis.title = element_text(face = "bold", size = 11),
+      plot.title = element_text(face = "bold", size = 14, hjust = 0),
+      plot.subtitle = element_text(size = 12, hjust = 0, color = "#4A4A4A"),
+      legend.position = "bottom",
+      legend.title = element_text(face = "bold"),
+      strip.text = element_text(face = "bold")
+    )
+}
+
+theme_set(theme_modern())
+set.seed(123)
+
+# Modern color palette
+modern_colors <- c("#0066CC", "#EB811B", "#14B03D", "#CC0033", "#6B3AA0", "#F7B500")
+scale_color_modern <- function(...) scale_color_manual(values = modern_colors, ...)
+scale_fill_modern <- function(...) scale_fill_manual(values = modern_colors, ...)
+
+options(
+  width = 50,
+  scipen = 999,
+  digits = 3
+)
+
+opts_chunk$set(
+  tidy = FALSE,
+  size = "normalsize"
+)
+```
+
+
+
+# Exercises: Background and Tools
+
+### Exercise a: setting up a working environment
+
+```{=tex}
+\begin{enumerate}
+\tightlist
+\item Open \keyword{RStudio} and navigate to your desired working folder
+
+\vspace{0.3em}
+
+\item Create a new folder called \accenttext{r\_course}
+
+\vspace{0.3em}
+
+\item Set it as your \keyword{working directory}
+
+\vspace{0.3em}
+
+\item Create subfolders: \highlight{data} and \highlight{code}
+
+\vspace{0.3em}
+
+\item[(*)] Create a new \important{R Project} in the \texttt{r\_course} folder
+
+\vspace{0.3em}
+
+\item[(*)] Choose your favorite R-studio \important{appearance}: `Tools > Global Options > Appearance`  
+\end{enumerate}
+```
+### Exercise b: r scripts
+
+1.  In the R console, type:
+
+```{r, eval=FALSE}
+print("Hello world")
+```
+
+2.  Create a new \keyword{R script}: `File > New File > R Script` (or `Ctrl+Shift+N`)
+
+3.  Type the same code in the script and \accenttext{run it} using `Ctrl+Enter` or `Ctrl+As+Enter`
+
+
+## Exercises II: First Steps and Basic Concepts 
+
+### Exercise a: write a sum function
+
+Write a function that takes a \keyword{numeric vector} as input and returns the \accenttext{sum} of the vector's elements.
+
+```{r, eval=FALSE}
+my_sum <- function(x) {
+    # Your code here
+}
+```
+
+Test by comparing with built-in `sum()` function.
+
+### Exercise b: robustness and warnings
+
+Test your `my_sum()` function with:
+
+```{r, eval=FALSE}
+numbers2 <- c("1", "2", "3")
+```
+
+Add \keyword{error checking} to make the function robust.
+
+### Exercise c: standard deviation function
+
+Implement a function to compute the \accenttext{standard deviation}:
+
+$$\text{SD} = \sqrt{\frac{1}{N-1}\sum_{i=1}^N (x_i - \bar{x})^2}$$
+
+### Exercise d: standard error function
+
+Building on Exercise C, implement:
+
+$$\text{SE}_{\bar{x}} = \frac{\text{SD}}{\sqrt{N}}$$
+
+### Exercise e: t-test
+
+Implement a \keyword{one-sample t-test} function:
+
+$$t = \frac{\bar{x} - \mu_0}{\text{SE}_{\bar{x}}}$$
+
+### Exercise f: fibonacci sequence
+
+Generate the first 30 \accenttext{Fibonacci numbers} where:
+
+-   $F_0 = 0$, $F_1 = 1$
+-   $F_n = F_{n-1} + F_{n-2}$ for $n > 1$
+
+### Exercise g: multiples of 3 and 5 (\*)
+
+Write a function that computes the sum of all \keyword{multiples of 3 or 5} up to a number $N$.
+
+\accenttext{Hint:} Multiples of both 3 and 5 should only be added once!
+
+### Exercise h: prime numbers (\*)
+
+Write a function that computes the sum of all \highlight{prime numbers} up to a number $N$.
+
+
+\normalsize
+
+## Exercise i: Working with Data using dplyr
+
+### Exercise i.1
+
+-   Load the dataset with `data(swiss)`\
+-   Use `mutate()` to create two new variables:
+    -   `UrbanizationRate`: the inverse of Agriculture (100 – Agriculture)\
+    -   `FertilityCategory`: a factor variable with levels:
+        -   0–60: "Low"\
+        -   60–80: "Medium"\
+        -   80–100: "High"\
+-   Hint: use `case_when()` for categorization
+
+### Exercise i.2
+
+-   Filter observations where Fertility \> 70\
+-   Arrange results by `Education` in descending order
+
+------------------------------------------------------------------------
+
+### Exercise i.3
+
+-   Group data by `FertilityCategory`\
+-   Calculate average `Education` for each category using `group_by()` and `summarize()`
+
+### Exercise i.4
+
+-   Find the top 3 observations with highest Fertility values\
+-   Display only `Fertility` and `Education` columns
+
+### Exercise i.5
+
+-   Create `EducationToFertilityRatio = Education / Fertility`\
+-   Show all observations where the ratio is between 0.1 and 0.2
+
+### Exercise i.6
+
+-   Group by `FertilityCategory`\
+-   Calculate:
+    -   Median Fertility\
+    -   Standard deviation of Education\
+-   Store the results in a new data frame
+
+### Exercise i.7
+
+-   Use `n_distinct()` to determine the number of distinct values in:
+    -   `Education`\
+    -   `FertilityCategory`
+
+## Exercise j: Visualizing Data
+
+### Exercise j.1
+
+-   Load the dataset `swiss.csv` or call `data(swiss)`
+
+### Exercise j.2
+
+-   Print the last 3 observations of the dataset\
+-   Create summary statistics for all variables
+
+### Exercise j.3
+
+-   Create new variables:
+    -   `UrbanizationRate` = 100 – Agriculture\
+    -   `FertilityCategory`:
+        -   0–60: "Low"\
+        -   60–80: "Medium"\
+        -   80–100: "High"\
+-   Hint: use `cut()`
+
+### Exercise j.4
+
+-   Create a histogram of `Fertility`
+    -   Fill bars in dark blue\
+    -   Add a minimal theme
+
+### Exercise j.5
+
+-   Create a boxplot of the variable `Education`
+
+### Exercise j.6
+
+-   Create a scatter plot of `Education` vs. `Fertility`\
+-   Add a regression line (linear model)
+
+### Exercise j.7
+
+-   Create scatter plots of `Agriculture` vs. `Examination`\
+-   Show them separately for each `FertilityCategory` using `facet_wrap()`
+
