@@ -1,0 +1,507 @@
+---
+title: "Exercises and Solutions"
+subtitle: "A Brief Introduction to Programming with R"
+author: "Ana Armendariz & Federica Mascolo"
+date: "September 4, 2026"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    embed-resources: true
+    theme: cosmo
+    code-copy: true
+    df-print: kable
+execute:
+  echo: true
+  warning: false
+  message: false
+  comment: ""
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r, eval=FALSE}
+install.packages(c("dplyr", "ggplot2"))
+library(dplyr)
+library(ggplot2)
+```
+
+# Part I: Background and tools
+
+### Exercise a: setting up a working environment
+
+1. Open RStudio and navigate to your desired working folder
+2. Create a new folder called `r_course`
+3. Set it as your working directory
+4. Create subfolders: `data` and `code`
+5. (\*) Create a new R Project in the `r_course` folder
+
+**Solution**
+
+```{r, eval=FALSE}
+dir.create("r_course")
+setwd("r_course")
+dir.create("data")
+dir.create("code")
+getwd()
+```
+
+R Project: `File > New Project > Existing Directory`, then pick `r_course`.
+
+### Exercise b: R scripts
+
+1. In the R console, type `print("Hello world")`
+2. Create a new R script: `File > New File > R Script` (or `Ctrl+Shift+N`)
+3. Type the same code in the script and run it using `Ctrl+Enter`
+
+**Solution**
+
+```{r}
+print("Hello world")
+```
+
+# Part II: First steps and basic concepts
+
+### Exercise a: write a sum function
+
+Write a function that takes a numeric vector as input and returns the sum of the
+vector's elements. Test by comparing with built-in `sum()` function.
+
+**Solution**
+
+```{r}
+my_sum <- function(x) {
+  total_sum <- 0
+
+  for (value in x) {
+    total_sum <- total_sum + value
+  }
+
+  return(total_sum)
+}
+
+numeric_vector <- c(1, 5, 4, 3)
+my_sum(numeric_vector)
+sum(numeric_vector)
+```
+
+### Exercise b: robustness and warnings
+
+Test your `my_sum()` function with `numbers2 <- c("1", "2", "3")`.
+Add error checking to make the function robust.
+
+**Solution**
+
+```{r}
+my_sum <- function(x) {
+  if (!is.numeric(x)) {
+    warning("The input is not numeric; attempting to convert it.")
+    x <- suppressWarnings(as.numeric(x))
+  }
+
+  if (anyNA(x)) {
+    stop("The input contains values that cannot be converted to numbers.")
+  }
+
+  total_sum <- 0
+
+  for (value in x) {
+    total_sum <- total_sum + value
+  }
+
+  return(total_sum)
+}
+
+numbers2 <- c("1", "2", "3")
+my_sum(numbers2)
+```
+
+### Exercise c: standard deviation function
+
+Implement a function to compute the standard deviation:
+
+$$
+\mathrm{SD} = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})^2}
+$$
+
+**Solution**
+
+```{r}
+my_sd <- function(x) {
+  if (!is.numeric(x)) {
+    stop("x must be numeric.")
+  }
+
+  n <- length(x)
+  if (n < 2) {
+    stop("x must contain at least two values.")
+  }
+
+  x_bar <- mean(x)
+  squared_deviations <- (x - x_bar)^2
+  sqrt(sum(squared_deviations) / (n - 1))
+}
+
+my_sd(numeric_vector)
+sd(numeric_vector)
+```
+
+### Exercise d: standard error function
+
+Building on Exercise c, implement:
+
+$$
+\mathrm{SE}_{\bar{x}} = \frac{\mathrm{SD}}{\sqrt{N}}
+$$
+
+**Solution**
+
+```{r}
+my_se <- function(x) {
+  my_sd(x) / sqrt(length(x))
+}
+
+my_se(numeric_vector)
+sd(numeric_vector) / sqrt(length(numeric_vector))
+```
+
+### Exercise e: t-test
+
+Implement a one-sample t-test function:
+
+$$
+t = \frac{\bar{x}-\mu_0}{\mathrm{SE}_{\bar{x}}}
+$$
+
+**Solution**
+
+```{r}
+my_t_test <- function(x, mu_0) {
+  (mean(x) - mu_0) / my_se(x)
+}
+
+my_t_test(numeric_vector, mu_0 = 3)
+unname(t.test(numeric_vector, mu = 3)$statistic)
+```
+
+### Exercise f: Fibonacci sequence
+
+Generate the first 30 Fibonacci numbers where $F_0 = 0$, $F_1 = 1$, and
+$F_n = F_{n-1} + F_{n-2}$ for $n > 1$.
+
+**Solution**
+
+```{r}
+fibonacci_sequence <- numeric(30)
+fibonacci_sequence[1] <- 0
+fibonacci_sequence[2] <- 1
+
+for (i in 3:30) {
+  fibonacci_sequence[i] <-
+    fibonacci_sequence[i - 1] + fibonacci_sequence[i - 2]
+}
+
+fibonacci_sequence
+```
+
+### Exercise g: multiples of 3 and 5 (\*)
+
+Write a function that computes the sum of all multiples of 3 or 5 up to a
+number $N$. Multiples of both 3 and 5 should only be added once.
+
+**Solution**
+
+```{r}
+sum_multiples_3_or_5 <- function(N) {
+  if (length(N) != 1 || !is.numeric(N) || is.na(N) || N < 1) {
+    stop("N must be one positive number.")
+  }
+
+  total <- 0
+
+  for (i in seq_len(floor(N))) {
+    if (i %% 3 == 0 || i %% 5 == 0) {
+      total <- total + i
+    }
+  }
+
+  return(total)
+}
+
+sum_multiples_3_or_5(100)
+```
+
+### Exercise h: prime numbers (\*)
+
+Write a function that computes the sum of all prime numbers up to a number $N$.
+
+**Solution**
+
+```{r}
+is_prime <- function(x) {
+  if (x < 2) {
+    return(FALSE)
+  }
+
+  largest_possible_divisor <- floor(sqrt(x))
+
+  if (largest_possible_divisor < 2) {
+    return(TRUE)
+  }
+
+  !any(x %% seq.int(2, largest_possible_divisor) == 0)
+}
+
+sum_primes_up_to <- function(N) {
+  if (length(N) != 1 || !is.numeric(N) || is.na(N) || N < 1) {
+    stop("N must be one positive number.")
+  }
+
+  candidates <- seq_len(floor(N))
+  prime_numbers <- candidates[
+    vapply(candidates, is_prime, logical(1))
+  ]
+
+  sum(prime_numbers)
+}
+
+sum_primes_up_to(100)
+```
+
+# Part III: Working with data
+
+## Exercise i: working with data using dplyr
+
+### Exercise i.1
+
+- Load the dataset with `data(swiss)`
+- Use `mutate()` to create two new variables:
+  - `UrbanizationRate`: the inverse of Agriculture (100 - Agriculture)
+  - `FertilityCategory`: a factor variable with levels 0-60 "Low", 60-80 "Medium", 80-100 "High"
+- Hint: use `case_when()` for categorization
+
+**Solution**
+
+```{r}
+data(swiss)
+
+swiss_data <- swiss |>
+  mutate(
+    UrbanizationRate = 100 - Agriculture,
+    FertilityCategory = case_when(
+      Fertility <= 60 ~ "Low",
+      Fertility > 60 & Fertility <= 80 ~ "Medium",
+      Fertility > 80 & Fertility <= 100 ~ "High",
+      TRUE ~ NA_character_
+    ),
+    FertilityCategory = factor(
+      FertilityCategory,
+      levels = c("Low", "Medium", "High")
+    )
+  )
+
+head(swiss_data)
+```
+
+### Exercise i.2
+
+- Filter observations where Fertility > 70
+- Arrange results by `Education` in descending order
+
+**Solution**
+
+```{r}
+swiss_data |>
+  filter(Fertility > 70) |>
+  arrange(desc(Education))
+```
+
+### Exercise i.3
+
+- Group data by `FertilityCategory`
+- Calculate average `Education` for each category using `group_by()` and `summarize()`
+
+**Solution**
+
+```{r}
+swiss_data |>
+  group_by(FertilityCategory) |>
+  summarize(
+    AverageEducation = mean(Education, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+### Exercise i.4
+
+- Find the top 3 observations with highest Fertility values
+- Display only `Fertility` and `Education` columns
+
+**Solution**
+
+```{r}
+swiss_data |>
+  slice_max(Fertility, n = 3, with_ties = FALSE) |>
+  select(Fertility, Education)
+```
+
+### Exercise i.5
+
+- Create `EducationToFertilityRatio = Education / Fertility`
+- Show all observations where the ratio is between 0.1 and 0.2
+
+**Solution**
+
+```{r}
+swiss_data |>
+  mutate(EducationToFertilityRatio = Education / Fertility) |>
+  filter(between(EducationToFertilityRatio, 0.1, 0.2))
+```
+
+### Exercise i.6
+
+- Group by `FertilityCategory`
+- Calculate median Fertility and standard deviation of Education
+- Store the results in a new data frame
+
+**Solution**
+
+```{r}
+swiss_stats <- swiss_data |>
+  group_by(FertilityCategory) |>
+  summarize(
+    MedianFertility = median(Fertility, na.rm = TRUE),
+    StandardDeviationEducation = sd(Education, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+swiss_stats
+```
+
+### Exercise i.7
+
+- Use `n_distinct()` to determine the number of distinct values in `Education` and `FertilityCategory`
+
+**Solution**
+
+```{r}
+swiss_data |>
+  summarize(
+    DistinctEducation = n_distinct(Education),
+    DistinctFertilityCategory = n_distinct(FertilityCategory)
+  )
+```
+
+## Exercise j: visualizing data
+
+### Exercise j.1
+
+- Load the dataset `swiss.csv` or call `data(swiss)`
+
+**Solution**
+
+```{r}
+data(swiss)
+swiss_data <- swiss
+```
+
+### Exercise j.2
+
+- Print the last 3 observations of the dataset
+- Create summary statistics for all variables
+
+**Solution**
+
+```{r}
+tail(swiss_data, 3)
+```
+
+```{r}
+summary(swiss_data)
+```
+
+### Exercise j.3
+
+- Create new variables:
+  - `UrbanizationRate` = 100 - Agriculture
+  - `FertilityCategory`: 0-60 "Low", 60-80 "Medium", 80-100 "High"
+- Hint: use `cut()`
+
+**Solution**
+
+```{r}
+swiss_data$UrbanizationRate <- 100 - swiss_data$Agriculture
+
+swiss_data$FertilityCategory <- cut(
+  swiss_data$Fertility,
+  breaks = c(0, 60, 80, 100),
+  labels = c("Low", "Medium", "High"),
+  include.lowest = TRUE
+)
+
+head(swiss_data)
+```
+
+### Exercise j.4
+
+- Create a histogram of `Fertility`, fill bars in dark blue, add a minimal theme
+
+**Solution**
+
+```{r}
+ggplot(swiss_data, aes(x = Fertility)) +
+  geom_histogram(binwidth = 5, fill = "darkblue", color = "white") +
+  labs(title = "Distribution of Fertility",
+       x = "Fertility", y = "Number of observations") +
+  theme_minimal()
+```
+
+### Exercise j.5
+
+- Create a boxplot of the variable `Education`
+
+**Solution**
+
+```{r}
+ggplot(swiss_data, aes(y = Education)) +
+  geom_boxplot(fill = "lightblue") +
+  labs(title = "Distribution of Education", y = "Education") +
+  theme_minimal()
+```
+
+### Exercise j.6
+
+- Create a scatter plot of `Education` vs. `Fertility`
+- Add a regression line (linear model)
+
+**Solution**
+
+```{r}
+ggplot(swiss_data, aes(x = Education, y = Fertility)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Fertility and Education",
+       x = "Education", y = "Fertility") +
+  theme_minimal()
+```
+
+### Exercise j.7
+
+- Create scatter plots of `Agriculture` vs. `Examination`
+- Show them separately for each `FertilityCategory` using `facet_wrap()`
+
+**Solution**
+
+```{r}
+ggplot(swiss_data, aes(x = Agriculture, y = Examination)) +
+  geom_point() +
+  facet_wrap(~ FertilityCategory) +
+  labs(title = "Agriculture and Examination by Fertility Category",
+       x = "Agriculture", y = "Examination") +
+  theme_minimal()
+```
