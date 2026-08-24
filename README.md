@@ -56,7 +56,7 @@ There is no examination.
 If you feel that you are missing essential skills, we recommend the four-day R course by Prof. Jana Mareckova in the following week. It is aimed at MEcon and MIA students with little or no previous experience in R, and you can attend individual days if you are only interested in specific parts.
 
 ## Lecturers
-[Ana Paula Armendariz Pacheco](https://github.com/aparmendariz) and [Federica Mascolo](https://github.com/federicamas).
+[Ana Paula Armendariz Pacheco](https://aparmendariz.github.io/) and [Federica Mascolo](https://github.com/federicamas).
 
 ## Credits
 Credit for a previous version of the course and slides go to [Jeremia Stalder](https://jeremiastalder.com), [Erik-Jan Senn](https://eriksenn.github.io/), [Prof. Ph.D. Ulrich Matter](https://umatter.github.io/) and [Jonathan Chassot](https://github.com/jldc).
